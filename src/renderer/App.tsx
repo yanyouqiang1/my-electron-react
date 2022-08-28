@@ -1,40 +1,19 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
 import './App.css';
+import { clipboard, ipcRenderer } from 'electron';
+import 'antd/dist/antd.css';
+import { Button } from 'antd';
+import MyEditor from './editor/editor';
 
 const Hello = () => {
+  ipcRenderer.on('update-counter', (_event, value) => {
+    window.location.href = '/editor';
+  });
   return (
     <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+      <h2>123</h2>
+      <h1>{clipboard.readText()}</h1>1<Button type="primary">test</Button>
+      <Button type="primary">test</Button>
     </div>
   );
 };
@@ -44,6 +23,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Hello />} />
+        <Route path="/editor" element={<MyEditor />} />
       </Routes>
     </Router>
   );
